@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
 import LoadingForge from '../components/LoadingForge';
 
-const DEFAULT_GENRES = ['Fantasy', 'Horror', 'Mystery', 'Thriller', 'Romance', 'Sci-Fi', 'Historical', 'Dark', 'Action', 'Adventure', 'Comedy', 'Drama', 'Supernatural', 'Crime', 'Dystopian', 'Psychological'];
+const DEFAULT_GENRES = ['Fantasy', 'Horror', 'Mystery', 'Thriller', 'Romance', 'Sci-Fi', 'Historical', 'Dark', 'Action', 'Adventure', 'Comedy', 'Drama', 'Supernatural', 'Crime', 'Dystopian', 'Psychological', 'Noir', 'Satire', 'Western', 'Mythology', 'Light Novel', 'Anime', 'Isekai', 'Manhwa', 'Shonen', 'Shojo', 'Seinen', 'Cultivation'];
 const TONES = [
   'Dark & Gritty', 'Gothic', 'Atmospheric', 'Epic', 'Suspenseful', 'Melancholic', 'Lyrical', 'Visceral',
   'Humorous', 'Light-hearted', 'Action-packed', 'Adventurous', 'Witty', 'Romantic', 'Dramatic', 'Tense',
+  'Dark Humour', 'Satirical', 'Bittersweet', 'Whimsical', 'Noir', 'Gritty Romance', 'Chaotic', 'Poetic',
+  'Overpowered', 'Slice of Life', 'Power Fantasy', 'Heartwarming', 'Coming of Age', 'Intense & Fast-paced',
 ];
 const LENGTHS = [
   { label: 'Short', sub: '~800 words', value: 800 },
@@ -31,6 +33,18 @@ const GENRE_ICONS = {
   Crime: 'bi-incognito',
   Dystopian: 'bi-building-slash',
   Psychological: 'bi-person-bounding-box',
+  Noir: 'bi-lamp',
+  Satire: 'bi-emoji-wink',
+  Western: 'bi-sunset',
+  Mythology: 'bi-tornado',
+  'Light Novel': 'bi-book',
+  Anime: 'bi-collection-play',
+  Isekai: 'bi-globe2',
+  Manhwa: 'bi-image',
+  Shonen: 'bi-lightning-charge',
+  Shojo: 'bi-flower1',
+  Seinen: 'bi-moon-stars',
+  Cultivation: 'bi-tree',
 };
 
 export default function CreateNovel() {
@@ -39,7 +53,7 @@ export default function CreateNovel() {
     title: '',
     plot: '',
     genres: [],
-    tone: '',
+    tones: [],
     chapter_length: 1500,
   });
   const [customGenres, setCustomGenres] = useState([]);
@@ -58,7 +72,7 @@ export default function CreateNovel() {
     e.preventDefault();
     if (!form.plot.trim()) { setError('The plot cannot be empty.'); return; }
     if (form.genres.length === 0) { setError('Please select at least one genre.'); return; }
-    if (!form.tone) { setError('Please choose a tone.'); return; }
+    if (form.tones.length === 0) { setError('Please choose at least one tone.'); return; }
 
     setError('');
     setLoading(true);
@@ -78,7 +92,7 @@ export default function CreateNovel() {
     }, 3500);
 
     try {
-      const res = await api.post('/novels', { ...form, genre: form.genres.join(' / ') });
+      const res = await api.post('/novels', { ...form, genre: form.genres.join(' / '), tone: form.tones.join(' & ') });
       clearInterval(interval);
       navigate(`/novels/${res.data.novel.id}/read`);
     } catch (err) {
@@ -93,6 +107,14 @@ export default function CreateNovel() {
       if (p.genres.includes(g)) return { ...p, genres: p.genres.filter(x => x !== g) };
       if (p.genres.length >= 4) return p; // max 4
       return { ...p, genres: [...p.genres, g] };
+    });
+  };
+
+  const toggleTone = (t) => {
+    setForm(p => {
+      if (p.tones.includes(t)) return { ...p, tones: p.tones.filter(x => x !== t) };
+      if (p.tones.length >= 2) return p;
+      return { ...p, tones: [...p.tones, t] };
     });
   };
 
@@ -112,7 +134,7 @@ export default function CreateNovel() {
 
   const borrowPlot = (novel) => {
     const borrowed = novel.genre ? novel.genre.split(' / ').map(g => g.trim()) : [];
-    setForm(p => ({ ...p, plot: novel.plot, genres: borrowed, tone: novel.tone }));
+    setForm(p => ({ ...p, plot: novel.plot, genres: borrowed, tones: novel.tone ? novel.tone.split(' & ') : [] }));
     setShowInspiration(false);
   };
 
@@ -321,17 +343,30 @@ export default function CreateNovel() {
 
             {/* Tone */}
             <div className="mb-4">
-              <label className="gf-label">Narrative Tone *</label>
+              <div className="d-flex align-items-center justify-content-between mb-2">
+                <label className="gf-label mb-0">
+                  Narrative Tone *
+                  <span style={{ color: 'var(--gf-faint)', textTransform: 'none', fontFamily: 'Crimson Text, serif', letterSpacing: 0, fontSize: '0.82rem', marginLeft: '0.5rem' }}>
+                    — select up to 2
+                  </span>
+                </label>
+                <span style={{ fontSize: '0.65rem', fontFamily: 'Cinzel, serif', letterSpacing: '0.1em', color: form.tones.length >= 2 ? 'var(--gf-accent)' : 'var(--gf-faint)' }}>
+                  {form.tones.length} / 2
+                </span>
+              </div>
               <div className="row g-2">
                 {TONES.map(t => (
                   <div key={t} className="col-6 col-sm-3">
                     <button
                       type="button"
-                      className={`genre-btn ${form.tone === t ? 'selected' : ''}`}
-                      onClick={() => setForm(p => ({ ...p, tone: t }))}
+                      className={`genre-btn ${form.tones.includes(t) ? 'selected' : ''}`}
+                      onClick={() => toggleTone(t)}
                       style={{ fontSize: '0.58rem' }}
                     >
                       {t}
+                      {form.tones.includes(t) && (
+                        <i className="bi bi-check-circle-fill" style={{ position: 'absolute', top: 6, right: 6, fontSize: '0.65rem', color: '#fff', opacity: 0.85 }}></i>
+                      )}
                     </button>
                   </div>
                 ))}
