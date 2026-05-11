@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
 import LoadingForge from '../components/LoadingForge';
 
-const DEFAULT_GENRES = ['Fantasy', 'Horror', 'Mystery', 'Thriller', 'Romance', 'Sci-Fi', 'Historical', 'Dark'];
+const DEFAULT_GENRES = ['Fantasy', 'Horror', 'Mystery', 'Thriller', 'Romance', 'Sci-Fi', 'Historical', 'Dark', 'Action', 'Adventure', 'Comedy', 'Drama', 'Supernatural', 'Crime', 'Dystopian', 'Psychological'];
 const TONES = ['Dark & Gritty', 'Gothic', 'Atmospheric', 'Epic', 'Suspenseful', 'Melancholic', 'Lyrical', 'Visceral'];
 const LENGTHS = [
   { label: 'Short', sub: '~800 words', value: 800 },
@@ -20,6 +20,14 @@ const GENRE_ICONS = {
   'Sci-Fi': 'bi-rocket',
   Historical: 'bi-hourglass',
   Dark: 'bi-fire',
+  Action: 'bi-shield-fill',
+  Adventure: 'bi-compass',
+  Comedy: 'bi-emoji-laughing',
+  Drama: 'bi-masks',
+  Supernatural: 'bi-eye',
+  Crime: 'bi-fingerprint',
+  Dystopian: 'bi-building-x',
+  Psychological: 'bi-brain',
 };
 
 export default function CreateNovel() {
@@ -78,18 +86,19 @@ export default function CreateNovel() {
   };
 
   const toggleGenre = (g) => {
-    setForm(p => ({
-      ...p,
-      genres: p.genres.includes(g) ? p.genres.filter(x => x !== g) : [...p.genres, g],
-    }));
+    setForm(p => {
+      if (p.genres.includes(g)) return { ...p, genres: p.genres.filter(x => x !== g) };
+      if (p.genres.length >= 3) return p; // max 3
+      return { ...p, genres: [...p.genres, g] };
+    });
   };
 
   const addCustomGenre = () => {
     const val = customInput.trim();
     if (!val) return;
+    if (form.genres.length >= 3) return;
     const normalised = val.charAt(0).toUpperCase() + val.slice(1);
     if ([...DEFAULT_GENRES, ...customGenres].includes(normalised)) {
-      // Already exists — just select it
       if (!form.genres.includes(normalised)) toggleGenre(normalised);
     } else {
       setCustomGenres(p => [...p, normalised]);
@@ -220,14 +229,12 @@ export default function CreateNovel() {
                 <label className="gf-label mb-0">
                   Genre *
                   <span style={{ color: 'var(--gf-faint)', textTransform: 'none', fontFamily: 'Crimson Text, serif', letterSpacing: 0, fontSize: '0.82rem', marginLeft: '0.5rem' }}>
-                    — select one or more
+                    — select up to 3
                   </span>
                 </label>
-                {form.genres.length > 0 && (
-                  <span style={{ fontSize: '0.65rem', fontFamily: 'Cinzel, serif', letterSpacing: '0.1em', color: 'var(--gf-accent)' }}>
-                    {form.genres.length} selected
-                  </span>
-                )}
+                <span style={{ fontSize: '0.65rem', fontFamily: 'Cinzel, serif', letterSpacing: '0.1em', color: form.genres.length >= 3 ? 'var(--gf-accent)' : 'var(--gf-faint)' }}>
+                  {form.genres.length} / 3
+                </span>
               </div>
 
               <div className="row g-2 mb-3">
