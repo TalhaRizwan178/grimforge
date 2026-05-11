@@ -125,8 +125,8 @@ export default function Navbar() {
                   Forge Novel
                 </Link>
 
-                {/* User dropdown */}
-                <div className="dropdown">
+                {/* User dropdown — desktop only, mobile version is outside collapse */}
+                <div className="dropdown d-none d-md-flex">
                   <div
                     className="gf-avatar dropdown-toggle"
                     data-bs-toggle="dropdown"
