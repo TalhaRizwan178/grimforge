@@ -33,6 +33,7 @@ export default function Reader() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showForgeModal, setShowForgeModal] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [regenerating, setRegenerating] = useState(false);
 
   const lastScrollY = useRef(0);
   const scrollTimer = useRef(null);
@@ -104,6 +105,21 @@ export default function Reader() {
     setSidebarOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
+
+  const handleRegenerate = async (chapterNum) => {
+    setRegenerating(true);
+    try {
+      await api.delete(`/novels/${id}/chapters/from/${chapterNum}`);
+      setChapters(prev => prev.filter(ch => ch.chapter_number < chapterNum));
+      setCurrentIdx(chapterNum - 2); // land on the chapter just before
+      setSidebarOpen(false);
+      setShowForgeModal(true);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setRegenerating(false);
+    }
+  };
 
   const handleGenerate = async (userDirection) => {
     setGenerating(true);
@@ -186,35 +202,64 @@ export default function Reader() {
         {/* Chapter list */}
         <div style={{ overflowY: 'auto', flex: 1, padding: '0.5rem 0' }}>
           {chapters.map((ch, i) => (
-            <button
+            <div
               key={ch.id}
-              onClick={() => goToChapter(i)}
-              style={{
-                width: '100%',
-                textAlign: 'left',
-                padding: '0.75rem 1.1rem',
-                background: currentIdx === i ? 'rgba(184,34,34,0.12)' : 'transparent',
-                border: 'none',
-                borderLeft: currentIdx === i ? '3px solid var(--gf-accent)' : '3px solid transparent',
-                cursor: 'pointer',
-                transition: 'all 0.15s',
-                color: currentIdx === i ? 'var(--gf-text)' : 'var(--gf-muted)',
-              }}
-              onMouseEnter={e => { if (currentIdx !== i) e.currentTarget.style.background = 'var(--gf-bg3)'; }}
-              onMouseLeave={e => { if (currentIdx !== i) e.currentTarget.style.background = 'transparent'; }}
+              style={{ display: 'flex', alignItems: 'stretch', borderLeft: currentIdx === i ? '3px solid var(--gf-accent)' : '3px solid transparent' }}
             >
-              <div style={{ fontFamily: 'Cinzel, serif', fontSize: '0.62rem', letterSpacing: '0.15em', color: currentIdx === i ? 'var(--gf-accent)' : 'var(--gf-faint)', marginBottom: '0.2rem' }}>
-                Chapter {ch.chapter_number}
-                {ch.chapter_number > 1 && (
-                  <span style={{ marginLeft: '0.4rem', fontSize: '0.55rem' }}>
-                    <i className="bi bi-lock-fill"></i>
-                  </span>
-                )}
-              </div>
-              <div style={{ fontSize: '0.78rem', color: 'inherit', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                {ch.content ? ch.content.replace(/\n/g, ' ').slice(0, 55) + '...' : `Chapter ${ch.chapter_number}`}
-              </div>
-            </button>
+              <button
+                onClick={() => goToChapter(i)}
+                style={{
+                  flex: 1,
+                  textAlign: 'left',
+                  padding: '0.75rem 0.75rem 0.75rem 0.85rem',
+                  background: currentIdx === i ? 'rgba(184,34,34,0.12)' : 'transparent',
+                  border: 'none',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s',
+                  color: currentIdx === i ? 'var(--gf-text)' : 'var(--gf-muted)',
+                  minWidth: 0,
+                }}
+                onMouseEnter={e => { if (currentIdx !== i) e.currentTarget.style.background = 'var(--gf-bg3)'; }}
+                onMouseLeave={e => { if (currentIdx !== i) e.currentTarget.style.background = 'transparent'; }}
+              >
+                <div style={{ fontFamily: 'Cinzel, serif', fontSize: '0.62rem', letterSpacing: '0.15em', color: currentIdx === i ? 'var(--gf-accent)' : 'var(--gf-faint)', marginBottom: '0.2rem' }}>
+                  Chapter {ch.chapter_number}
+                  {ch.chapter_number > 1 && (
+                    <span style={{ marginLeft: '0.4rem', fontSize: '0.55rem' }}>
+                      <i className="bi bi-lock-fill"></i>
+                    </span>
+                  )}
+                </div>
+                <div style={{ fontSize: '0.78rem', color: 'inherit', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  {ch.content ? ch.content.replace(/\n/g, ' ').slice(0, 55) + '...' : `Chapter ${ch.chapter_number}`}
+                </div>
+              </button>
+
+              {ch.chapter_number > 1 && (
+                <button
+                  onClick={() => handleRegenerate(ch.chapter_number)}
+                  disabled={regenerating}
+                  title={`Regenerate from Chapter ${ch.chapter_number}`}
+                  style={{
+                    background: 'transparent',
+                    border: 'none',
+                    borderLeft: '1px solid var(--gf-border)',
+                    color: 'var(--gf-faint)',
+                    cursor: regenerating ? 'not-allowed' : 'pointer',
+                    padding: '0 0.6rem',
+                    fontSize: '0.7rem',
+                    flexShrink: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    transition: 'all 0.15s',
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.color = 'var(--gf-accent)'; e.currentTarget.style.background = 'rgba(184,34,34,0.08)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.color = 'var(--gf-faint)'; e.currentTarget.style.background = 'transparent'; }}
+                >
+                  <i className="bi bi-arrow-counterclockwise"></i>
+                </button>
+              )}
+            </div>
           ))}
 
           {/* Generate next placeholder */}

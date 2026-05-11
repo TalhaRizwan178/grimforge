@@ -1,4 +1,5 @@
 const express = require('express');
+const { Op } = require('sequelize');
 const { Novel, Chapter, StoryContext, NovelRead } = require('../models');
 const { authenticate } = require('../middleware/auth');
 const { generateNextChapter, extractStoryContext, generateBranchSuggestions } = require('../services/groq');
@@ -103,6 +104,37 @@ router.post('/', authenticate, async (req, res) => {
 
     await NovelRead.findOrCreate({ where: { novel_id, user_id } });
     res.status(201).json(newChapter);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// DELETE /api/novels/:id/chapters/from/:num — delete chapter :num and all after (user's own)
+router.delete('/from/:num', authenticate, async (req, res) => {
+  try {
+    const novel_id = req.params.id;
+    const user_id = req.user.id;
+    const fromNum = parseInt(req.params.num);
+
+    if (fromNum <= 1) return res.status(400).json({ error: 'Cannot delete chapter 1' });
+
+    await Chapter.destroy({
+      where: {
+        novel_id,
+        user_id,
+        chapter_number: { [Op.gte]: fromNum },
+      },
+    });
+
+    // Trim story context: keep only summaries for chapters before fromNum
+    const storyContext = await StoryContext.findOne({ where: { novel_id, user_id } });
+    if (storyContext) {
+      await storyContext.update({
+        chapter_summaries: storyContext.chapter_summaries.slice(0, fromNum - 1),
+      });
+    }
+
+    res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
