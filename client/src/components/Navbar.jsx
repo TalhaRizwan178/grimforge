@@ -58,9 +58,9 @@ export default function Navbar() {
           </button>
         </div>
 
-        <div className="collapse navbar-collapse" id="gfNavbar">
-          {/* Left nav — right aligned on mobile */}
-          <ul className="navbar-nav me-auto gap-1 text-end text-md-start">
+        <div className="collapse navbar-collapse" id="gfNavbar" style={{ justifyContent: 'flex-end' }}>
+          {/* Nav links */}
+          <ul className="navbar-nav gap-1 text-end text-md-start me-md-auto">
             <li className="nav-item">
               <Link to="/" className={`nav-link ${isActive('/') ? 'active' : ''}`}>
                 Browse
@@ -76,7 +76,7 @@ export default function Navbar() {
           </ul>
 
           {/* Right controls */}
-          <div className="d-flex align-items-center justify-content-end gap-2">
+          <div className="d-flex align-items-center justify-content-end gap-2 mt-2 mt-md-0">
             {/* Theme cycle button (desktop) */}
             <button
               className="btn-gf-icon d-none d-md-flex"
