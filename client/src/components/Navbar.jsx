@@ -103,7 +103,7 @@ export default function Navbar() {
                   >
                     {user.username[0].toUpperCase()}
                   </div>
-                  <ul className="dropdown-menu dropdown-menu-end">
+                  <ul className="dropdown-menu dropdown-menu-end" style={{ right: 0, left: 'auto' }}>
                     <li>
                       <span style={{ display: 'block', padding: '0.5rem 1rem', fontSize: '0.75rem', color: 'var(--gf-muted)', fontFamily: 'Cinzel, serif' }}>
                         {user.username}
