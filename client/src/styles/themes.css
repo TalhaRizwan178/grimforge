@@ -1,0 +1,185 @@
+/* ================================================================
+   GRIMFORGE THEME SYSTEM
+   6 Themes: Midnight, Parchment, Daylight, Abyss, Verdant, Twilight
+   All components reference these CSS custom properties.
+================================================================ */
+
+/* ── MIDNIGHT (Default — dark crimson & gold) ── */
+[data-theme="midnight"] {
+  --gf-bg:           #0a0a0f;
+  --gf-bg2:          #111118;
+  --gf-bg3:          #1a1a24;
+  --gf-bg4:          #24242f;
+  --gf-border:       #2e2e3a;
+  --gf-border-light: #3a3a48;
+  --gf-accent:       #b82222;
+  --gf-accent-h:     #d43030;
+  --gf-accent-d:     #8b1818;
+  --gf-gold:         #c9a227;
+  --gf-gold-h:       #d4b040;
+  --gf-text:         #ede5d4;
+  --gf-text2:        #c8ba9e;
+  --gf-muted:        #9a8c78;
+  --gf-faint:        #6e6050;
+  --gf-nav-bg:       rgba(11, 11, 18, 0.97);
+  --gf-card-shadow:  0 4px 24px rgba(0,0,0,0.6);
+  --gf-card-hover-shadow: 0 8px 40px rgba(184,34,34,0.18);
+  --gf-reader-bg:    #0c0c12;
+  --gf-reader-text:  #e8dfc8;
+  --gf-scrollbar:    #5a1010;
+  --gf-scrollbar-h:  #9a1c1c;
+  --gf-input-bg:     #0f0f18;
+  --gf-badge-bg:     rgba(184,34,34,0.2);
+  --gf-badge-color:  #e86060;
+  --gf-overlay:      rgba(10,10,15,0.85);
+}
+
+/* ── PARCHMENT (Warm sepia — old manuscript) ── */
+[data-theme="parchment"] {
+  --gf-bg:           #f5edd8;
+  --gf-bg2:          #ede3c8;
+  --gf-bg3:          #e3d8b8;
+  --gf-bg4:          #d8cca8;
+  --gf-border:       #c4b490;
+  --gf-border-light: #d4c4a0;
+  --gf-accent:       #8b2020;
+  --gf-accent-h:     #a82828;
+  --gf-accent-d:     #6a1818;
+  --gf-gold:         #8b6914;
+  --gf-gold-h:       #a07818;
+  --gf-text:         #2a1a0c;
+  --gf-text2:        #4a3020;
+  --gf-muted:        #7a5a40;
+  --gf-faint:        #a08060;
+  --gf-nav-bg:       rgba(237,227,200,0.97);
+  --gf-card-shadow:  0 4px 20px rgba(0,0,0,0.12);
+  --gf-card-hover-shadow: 0 8px 32px rgba(139,32,32,0.18);
+  --gf-reader-bg:    #f8f2e0;
+  --gf-reader-text:  #1e120a;
+  --gf-scrollbar:    #8b6914;
+  --gf-scrollbar-h:  #a07818;
+  --gf-input-bg:     #ede3c8;
+  --gf-badge-bg:     rgba(139,32,32,0.12);
+  --gf-badge-color:  #8b2020;
+  --gf-overlay:      rgba(245,237,216,0.88);
+}
+
+/* ── DAYLIGHT (Clean light mode) ── */
+[data-theme="daylight"] {
+  --gf-bg:           #f4f6f8;
+  --gf-bg2:          #e8ecf0;
+  --gf-bg3:          #ffffff;
+  --gf-bg4:          #f0f2f4;
+  --gf-border:       #d0d6de;
+  --gf-border-light: #e0e4ea;
+  --gf-accent:       #c0392b;
+  --gf-accent-h:     #d44333;
+  --gf-accent-d:     #9a2e22;
+  --gf-gold:         #c0860c;
+  --gf-gold-h:       #d09414;
+  --gf-text:         #1a1e2e;
+  --gf-text2:        #3a4060;
+  --gf-muted:        #6070a0;
+  --gf-faint:        #8090b8;
+  --gf-nav-bg:       rgba(244,246,248,0.97);
+  --gf-card-shadow:  0 2px 16px rgba(0,0,0,0.08);
+  --gf-card-hover-shadow: 0 8px 30px rgba(192,57,43,0.14);
+  --gf-reader-bg:    #ffffff;
+  --gf-reader-text:  #1a1e2e;
+  --gf-scrollbar:    #c0392b;
+  --gf-scrollbar-h:  #d44333;
+  --gf-input-bg:     #ffffff;
+  --gf-badge-bg:     rgba(192,57,43,0.1);
+  --gf-badge-color:  #c0392b;
+  --gf-overlay:      rgba(244,246,248,0.9);
+}
+
+/* ── ABYSS (Deep ocean blue) ── */
+[data-theme="abyss"] {
+  --gf-bg:           #020b18;
+  --gf-bg2:          #050f20;
+  --gf-bg3:          #0a1830;
+  --gf-bg4:          #0f2040;
+  --gf-border:       #162840;
+  --gf-border-light: #203858;
+  --gf-accent:       #1a78c2;
+  --gf-accent-h:     #2090e0;
+  --gf-accent-d:     #1260a0;
+  --gf-gold:         #00bcd4;
+  --gf-gold-h:       #00d8f0;
+  --gf-text:         #c8e0f8;
+  --gf-text2:        #90b8e0;
+  --gf-muted:        #6090c0;
+  --gf-faint:        #406890;
+  --gf-nav-bg:       rgba(2,11,24,0.97);
+  --gf-card-shadow:  0 4px 24px rgba(0,0,0,0.7);
+  --gf-card-hover-shadow: 0 8px 40px rgba(26,120,194,0.25);
+  --gf-reader-bg:    #010810;
+  --gf-reader-text:  #d0e8f8;
+  --gf-scrollbar:    #1a78c2;
+  --gf-scrollbar-h:  #2090e0;
+  --gf-input-bg:     #050f20;
+  --gf-badge-bg:     rgba(26,120,194,0.2);
+  --gf-badge-color:  #60c0f8;
+  --gf-overlay:      rgba(2,11,24,0.88);
+}
+
+/* ── VERDANT (Dark ancient forest) ── */
+[data-theme="verdant"] {
+  --gf-bg:           #040c06;
+  --gf-bg2:          #081410;
+  --gf-bg3:          #0c1e16;
+  --gf-bg4:          #122818;
+  --gf-border:       #1a3820;
+  --gf-border-light: #244828;
+  --gf-accent:       #2d8048;
+  --gf-accent-h:     #389858;
+  --gf-accent-d:     #226038;
+  --gf-gold:         #90c840;
+  --gf-gold-h:       #a8d858;
+  --gf-text:         #c0e8c0;
+  --gf-text2:        #90c890;
+  --gf-muted:        #608860;
+  --gf-faint:        #3a6038;
+  --gf-nav-bg:       rgba(4,12,6,0.97);
+  --gf-card-shadow:  0 4px 24px rgba(0,0,0,0.7);
+  --gf-card-hover-shadow: 0 8px 40px rgba(45,128,72,0.25);
+  --gf-reader-bg:    #030a04;
+  --gf-reader-text:  #c8e8c0;
+  --gf-scrollbar:    #2d8048;
+  --gf-scrollbar-h:  #389858;
+  --gf-input-bg:     #081410;
+  --gf-badge-bg:     rgba(45,128,72,0.2);
+  --gf-badge-color:  #70d880;
+  --gf-overlay:      rgba(4,12,6,0.88);
+}
+
+/* ── TWILIGHT (Deep violet / arcane) ── */
+[data-theme="twilight"] {
+  --gf-bg:           #080510;
+  --gf-bg2:          #100a1e;
+  --gf-bg3:          #180f2e;
+  --gf-bg4:          #201440;
+  --gf-border:       #2a1c50;
+  --gf-border-light: #382868;
+  --gf-accent:       #8b30c8;
+  --gf-accent-h:     #a040e0;
+  --gf-accent-d:     #6a2098;
+  --gf-gold:         #e040a0;
+  --gf-gold-h:       #f060b8;
+  --gf-text:         #e8d8f8;
+  --gf-text2:        #c0a0e0;
+  --gf-muted:        #8870b0;
+  --gf-faint:        #604880;
+  --gf-nav-bg:       rgba(8,5,16,0.97);
+  --gf-card-shadow:  0 4px 24px rgba(0,0,0,0.7);
+  --gf-card-hover-shadow: 0 8px 40px rgba(139,48,200,0.25);
+  --gf-reader-bg:    #060410;
+  --gf-reader-text:  #ece0f8;
+  --gf-scrollbar:    #8b30c8;
+  --gf-scrollbar-h:  #a040e0;
+  --gf-input-bg:     #100a1e;
+  --gf-badge-bg:     rgba(139,48,200,0.2);
+  --gf-badge-color:  #c080f0;
+  --gf-overlay:      rgba(8,5,16,0.88);
+}

@@ -1,0 +1,372 @@
+/* ================================================================
+   GRIMFORGE READER STYLES
+   All reader typography and layout — driven by CSS vars set via JS
+================================================================ */
+
+/* Reading Font Families */
+.rf-crimson     { --reader-font: 'Crimson Text', Georgia, serif; }
+.rf-garamond    { --reader-font: 'EB Garamond', Garamond, serif; }
+.rf-merriweather{ --reader-font: 'Merriweather', Georgia, serif; }
+.rf-source-serif{ --reader-font: 'Source Serif 4', 'Times New Roman', serif; }
+.rf-georgia     { --reader-font: Georgia, 'Times New Roman', serif; }
+.rf-lato        { --reader-font: 'Lato', system-ui, sans-serif; }
+.rf-dancing     { --reader-font: 'Dancing Script', cursive; }
+
+/* Reading Width */
+.rw-narrow  { --reader-max-width: 560px; }
+.rw-standard{ --reader-max-width: 720px; }
+.rw-wide    { --reader-max-width: 900px; }
+.rw-full    { --reader-max-width: 100%; }
+
+/* Line Height */
+.rl-compact  { --reader-lh: 1.55; }
+.rl-normal   { --reader-lh: 1.80; }
+.rl-relaxed  { --reader-lh: 2.05; }
+.rl-spacious { --reader-lh: 2.30; }
+
+/* Text Alignment */
+.ra-left    { --reader-align: left; }
+.ra-justify { --reader-align: justify; }
+
+/* ── The Reader Container ── */
+.grimforge-reader {
+  background-color: var(--gf-reader-bg);
+  color: var(--gf-reader-text);
+  min-height: 100vh;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+/* ── Reading Area ── */
+.reading-area {
+  max-width: var(--reader-max-width, 720px);
+  margin: 0 auto;
+  padding: 3rem 1.5rem 6rem;
+}
+
+/* ── Chapter Content ── */
+.chapter-content {
+  font-family: var(--reader-font, 'Crimson Text', Georgia, serif);
+  font-size: var(--reader-font-size, 19px);
+  line-height: var(--reader-lh, 1.85);
+  text-align: var(--reader-align, left);
+  color: var(--gf-reader-text);
+  transition: font-size 0.2s ease, line-height 0.2s ease, font-family 0.2s ease;
+}
+
+.chapter-content p {
+  margin-bottom: 1.4em;
+  text-indent: 2em;
+}
+
+.chapter-content p:first-of-type {
+  text-indent: 0;
+}
+
+/* Drop cap */
+.chapter-content p:first-of-type::first-letter {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 4.2em;
+  font-weight: 700;
+  line-height: 0.82;
+  float: left;
+  margin-right: 0.08em;
+  margin-top: 0.05em;
+  color: var(--gf-accent);
+}
+
+/* ── Chapter Header ── */
+.chapter-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--gf-border);
+  position: relative;
+}
+
+.chapter-header::after {
+  content: '⚔';
+  display: block;
+  font-size: 1.1rem;
+  color: var(--gf-accent);
+  margin-top: 1.5rem;
+}
+
+.chapter-number {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gf-muted);
+  margin-bottom: 0.5rem;
+}
+
+.chapter-title-display {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 600;
+  color: var(--gf-text);
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.chapter-meta {
+  font-size: 0.82rem;
+  color: var(--gf-muted);
+}
+
+/* ── Chapter End ── */
+.chapter-end-ornament {
+  text-align: center;
+  padding: 3rem 0 2rem;
+  color: var(--gf-faint);
+  font-size: 1.3rem;
+  letter-spacing: 0.5em;
+}
+
+/* ── Reading Progress Bar ── */
+.reading-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gf-accent), var(--gf-gold));
+  z-index: 9999;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 8px var(--gf-accent);
+}
+
+/* ── Reader Top Bar (auto-hides) ── */
+.reader-topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1040;
+  background: var(--gf-nav-bg);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--gf-border);
+  padding: 0.6rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.reader-topbar.hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+/* ── Reader Bottom Bar ── */
+.reader-bottombar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1040;
+  background: var(--gf-nav-bg);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--gf-border);
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.reader-bottombar.hidden {
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+/* ── Chapter Pills (nav) ── */
+.chapter-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  border: 1px solid var(--gf-border);
+  background: transparent;
+  color: var(--gf-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 2px;
+}
+
+.chapter-pill:hover {
+  border-color: var(--gf-accent);
+  color: var(--gf-text);
+}
+
+.chapter-pill.active {
+  background: var(--gf-accent);
+  border-color: var(--gf-accent);
+  color: #fff;
+}
+
+/* ── Generate Chapter CTA ── */
+.forge-cta {
+  text-align: center;
+  padding: 4rem 2rem;
+  border-top: 1px solid var(--gf-border);
+  margin-top: 3rem;
+}
+
+.forge-cta-icon {
+  font-size: 2.5rem;
+  color: var(--gf-accent);
+  display: block;
+  margin-bottom: 1.5rem;
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; text-shadow: 0 0 10px var(--gf-accent); }
+  50% { opacity: 0.7; text-shadow: 0 0 30px var(--gf-accent); }
+}
+
+/* ── Settings Panel (Offcanvas) ── */
+.reader-settings-panel .offcanvas {
+  background: var(--gf-bg2);
+  border-left: 1px solid var(--gf-border);
+  color: var(--gf-text);
+  width: 340px;
+  max-width: 95vw;
+}
+
+.reader-settings-panel .offcanvas-header {
+  border-bottom: 1px solid var(--gf-border);
+  padding: 1.25rem 1.5rem;
+}
+
+.settings-section-title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gf-muted);
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--gf-border);
+}
+
+/* Theme Cards in Settings */
+.theme-swatch {
+  width: 100%;
+  aspect-ratio: 16/8;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-swatch::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: rgba(255,255,255,0.08);
+  transition: opacity 0.2s;
+}
+
+.theme-swatch:hover::before { opacity: 1; }
+
+.theme-swatch.active {
+  border-color: var(--gf-accent) !important;
+  box-shadow: 0 0 0 1px var(--gf-accent);
+}
+
+/* Font Option Buttons */
+.font-option {
+  width: 100%;
+  padding: 0.6rem 0.9rem;
+  background: var(--gf-bg3);
+  border: 1px solid var(--gf-border);
+  color: var(--gf-text2);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.font-option:hover {
+  border-color: var(--gf-accent);
+  color: var(--gf-text);
+}
+
+.font-option.active {
+  border-color: var(--gf-accent);
+  background: var(--gf-bg4);
+  color: var(--gf-text);
+}
+
+.font-option-name {
+  font-size: 0.65rem;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.08em;
+  color: var(--gf-muted);
+  display: block;
+  margin-top: 2px;
+}
+
+/* Width / LH option pills */
+.option-pill {
+  flex: 1;
+  padding: 0.45rem 0;
+  font-size: 0.7rem;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.05em;
+  text-align: center;
+  background: var(--gf-bg3);
+  border: 1px solid var(--gf-border);
+  color: var(--gf-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.option-pill:hover {
+  color: var(--gf-text);
+  border-color: var(--gf-accent);
+}
+
+.option-pill.active {
+  background: var(--gf-accent);
+  border-color: var(--gf-accent);
+  color: #fff;
+}
+
+/* Font size controls */
+.font-size-display {
+  font-family: 'Cinzel', serif;
+  font-size: 0.9rem;
+  color: var(--gf-text);
+  min-width: 44px;
+  text-align: center;
+}
+
+/* Keyboard shortcut hint */
+.kbd-hint {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-family: monospace;
+  background: var(--gf-bg4);
+  border: 1px solid var(--gf-border);
+  border-radius: 3px;
+  padding: 1px 5px;
+  color: var(--gf-muted);
+}

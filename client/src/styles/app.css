@@ -1,0 +1,704 @@
+/* ================================================================
+   GRIMFORGE APP STYLES
+   Bootstrap overrides + global GrimForge UI styles
+================================================================ */
+
+/* ── Global Body ── */
+body {
+  background-color: var(--gf-bg);
+  color: var(--gf-text);
+  font-family: 'Crimson Text', Georgia, serif;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  transition: background-color 0.35s ease, color 0.35s ease;
+  min-height: 100vh;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--gf-bg); }
+::-webkit-scrollbar-thumb { background: var(--gf-scrollbar); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gf-scrollbar-h); }
+
+/* ── Typography ── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Cinzel', Georgia, serif;
+  color: var(--gf-text);
+}
+
+a { color: var(--gf-gold); text-decoration: none; }
+a:hover { color: var(--gf-gold-h); }
+
+.text-accent  { color: var(--gf-accent) !important; }
+.text-gold    { color: var(--gf-gold) !important; }
+.text-muted-gf{ color: var(--gf-muted) !important; }
+.text-gf      { color: var(--gf-text) !important; }
+.text-gf2     { color: var(--gf-text2) !important; }
+.text-faint   { color: var(--gf-faint) !important; }
+.font-display { font-family: 'Cinzel', serif !important; }
+.tracking-wide{ letter-spacing: 0.08em; }
+.tracking-wider { letter-spacing: 0.18em; }
+.tracking-widest { letter-spacing: 0.28em; }
+
+/* ── Navbar ── */
+.gf-navbar {
+  background: var(--gf-nav-bg) !important;
+  border-bottom: 1px solid var(--gf-border);
+  backdrop-filter: blur(12px);
+  padding: 0.7rem 0;
+  transition: background 0.35s ease, border-color 0.35s ease;
+}
+
+.gf-navbar .navbar-brand {
+  font-family: 'Cinzel', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--gf-text) !important;
+}
+
+.gf-navbar .navbar-brand span { color: var(--gf-accent); }
+
+.gf-navbar .nav-link {
+  font-family: 'Cinzel', serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gf-muted) !important;
+  padding: 0.4rem 0.85rem !important;
+  transition: color 0.2s ease;
+}
+
+.gf-navbar .nav-link:hover,
+.gf-navbar .nav-link.active { color: var(--gf-text) !important; }
+
+.gf-navbar .navbar-toggler {
+  border-color: var(--gf-border);
+  color: var(--gf-muted);
+}
+
+.gf-navbar .navbar-toggler-icon {
+  filter: invert(1);
+  opacity: 0.6;
+}
+
+/* Dropdown in navbar */
+.gf-navbar .dropdown-menu {
+  background: var(--gf-bg2);
+  border: 1px solid var(--gf-border);
+  border-radius: 0;
+  box-shadow: var(--gf-card-shadow);
+  min-width: 160px;
+  padding: 0.35rem 0;
+}
+
+.gf-navbar .dropdown-item {
+  font-family: 'Cinzel', serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  color: var(--gf-muted);
+  padding: 0.6rem 1.1rem;
+  transition: all 0.15s;
+}
+
+.gf-navbar .dropdown-item:hover {
+  background: var(--gf-bg3);
+  color: var(--gf-text);
+}
+
+.gf-navbar .dropdown-divider { border-color: var(--gf-border); }
+
+/* Avatar button */
+.gf-avatar {
+  width: 34px;
+  height: 34px;
+  background: var(--gf-accent-d);
+  border: 1px solid var(--gf-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.gf-avatar:hover { background: var(--gf-accent); }
+
+/* ── Buttons ── */
+.btn-gf-primary {
+  font-family: 'Cinzel', serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  background: var(--gf-accent);
+  color: #fff;
+  border: 1px solid var(--gf-accent);
+  padding: 0.65rem 1.5rem;
+  border-radius: 0;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-gf-primary:hover {
+  background: var(--gf-accent-h);
+  border-color: var(--gf-accent-h);
+  color: #fff;
+  box-shadow: 0 0 20px rgba(184,34,34,0.35);
+}
+
+.btn-gf-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-gf-secondary {
+  font-family: 'Cinzel', serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--gf-gold);
+  border: 1px solid var(--gf-gold);
+  padding: 0.65rem 1.5rem;
+  border-radius: 0;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-gf-secondary:hover {
+  background: var(--gf-gold);
+  color: var(--gf-bg);
+  box-shadow: 0 0 20px rgba(201,162,39,0.3);
+}
+
+.btn-gf-ghost {
+  background: transparent;
+  color: var(--gf-muted);
+  border: 1px solid var(--gf-border);
+  padding: 0.5rem 1rem;
+  border-radius: 0;
+  font-size: 0.82rem;
+  transition: all 0.2s ease;
+}
+
+.btn-gf-ghost:hover {
+  background: var(--gf-bg3);
+  border-color: var(--gf-border-light);
+  color: var(--gf-text);
+}
+
+.btn-gf-icon {
+  background: transparent;
+  border: 1px solid var(--gf-border);
+  color: var(--gf-muted);
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  border-radius: 0;
+  font-size: 1.1rem;
+}
+
+.btn-gf-icon:hover {
+  background: var(--gf-bg3);
+  border-color: var(--gf-accent);
+  color: var(--gf-text);
+}
+
+/* ── Cards ── */
+.gf-card {
+  background: var(--gf-bg3);
+  border: 1px solid var(--gf-border);
+  border-radius: 0;
+  box-shadow: var(--gf-card-shadow);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.gf-card:hover {
+  border-color: var(--gf-border-light);
+  box-shadow: var(--gf-card-hover-shadow);
+  transform: translateY(-2px);
+}
+
+.gf-card .card-img-top {
+  border-radius: 0;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  opacity: 0.75;
+  transition: opacity 0.3s, transform 0.4s ease;
+}
+
+.gf-card:hover .card-img-top {
+  opacity: 0.9;
+  transform: scale(1.03);
+}
+
+.gf-card .card-body {
+  padding: 1.1rem 1.25rem;
+}
+
+/* ── Form Controls ── */
+.gf-input {
+  background: var(--gf-input-bg);
+  border: 1px solid var(--gf-border);
+  border-radius: 0;
+  color: var(--gf-text);
+  padding: 0.65rem 1rem;
+  font-size: 1rem;
+  font-family: 'Crimson Text', serif;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+}
+
+.gf-input:focus {
+  outline: none;
+  border-color: var(--gf-accent);
+  box-shadow: 0 0 0 2px rgba(184,34,34,0.2);
+  background: var(--gf-input-bg);
+  color: var(--gf-text);
+}
+
+.gf-input::placeholder { color: var(--gf-faint); }
+
+.gf-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gf-muted);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.gf-select {
+  background-color: var(--gf-input-bg);
+  border: 1px solid var(--gf-border);
+  border-radius: 0;
+  color: var(--gf-text);
+  padding: 0.65rem 1rem;
+  width: 100%;
+  cursor: pointer;
+}
+
+.gf-select:focus {
+  outline: none;
+  border-color: var(--gf-accent);
+  box-shadow: 0 0 0 2px rgba(184,34,34,0.2);
+}
+
+/* ── Error / Alert ── */
+.gf-alert-error {
+  background: var(--gf-badge-bg);
+  border: 1px solid var(--gf-accent-d);
+  color: var(--gf-badge-color);
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+}
+
+.gf-alert-success {
+  background: rgba(45,128,72,0.15);
+  border: 1px solid rgba(45,128,72,0.4);
+  color: #70d880;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+}
+
+/* ── Badge ── */
+.gf-badge {
+  font-family: 'Cinzel', serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: var(--gf-badge-bg);
+  color: var(--gf-badge-color);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 0.2rem 0.55rem;
+  border-radius: 0;
+  display: inline-block;
+}
+
+/* ── Genre Selection Grid ── */
+.genre-btn {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid var(--gf-border);
+  color: var(--gf-muted);
+  padding: 0.65rem;
+  width: 100%;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border-radius: 0;
+  position: relative;
+}
+
+.genre-btn:hover {
+  border-color: var(--gf-accent);
+  color: var(--gf-text);
+  background: var(--gf-bg4);
+}
+
+.genre-btn.selected {
+  background: var(--gf-accent);
+  border-color: var(--gf-accent);
+  color: #fff;
+}
+
+/* ── Hero Section ── */
+.gf-hero {
+  position: relative;
+  background: var(--gf-bg2);
+  border-bottom: 1px solid var(--gf-border);
+  padding: 5rem 0 4rem;
+  overflow: hidden;
+}
+
+.gf-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 48px,
+      rgba(255,255,255,0.012) 48px,
+      rgba(255,255,255,0.012) 50px
+    );
+  pointer-events: none;
+}
+
+.gf-hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, var(--gf-bg));
+  pointer-events: none;
+}
+
+.hero-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  line-height: 1.15;
+  color: var(--gf-text);
+}
+
+.hero-title .accent { color: var(--gf-accent); }
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--gf-muted);
+  max-width: 540px;
+  line-height: 1.7;
+}
+
+.hero-icon {
+  font-size: 3.5rem;
+  color: var(--gf-accent);
+  display: block;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 40px rgba(184,34,34,0.5);
+}
+
+/* ── Section Titles ── */
+.gf-section-title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gf-muted);
+  position: relative;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.gf-section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 1px;
+  background: var(--gf-accent);
+}
+
+/* ── Divider ── */
+.gf-divider {
+  border: none;
+  border-top: 1px solid var(--gf-border);
+  margin: 1.5rem 0;
+}
+
+/* ── Novel detail hero image overlay ── */
+.novel-hero {
+  position: relative;
+  height: min(360px, 45vw);
+  min-height: 200px;
+  overflow: hidden;
+}
+
+.novel-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.35);
+}
+
+.novel-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, var(--gf-bg) 0%, rgba(0,0,0,0) 60%);
+  display: flex;
+  align-items: flex-end;
+  padding: 2rem;
+}
+
+/* ── Loading Forge Spinner ── */
+.loading-forge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1rem;
+  gap: 1.25rem;
+}
+
+.forge-spinner {
+  position: relative;
+  width: 56px;
+  height: 56px;
+}
+
+.forge-spinner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--gf-border);
+  border-top-color: var(--gf-accent);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+.forge-spinner-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--gf-accent);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-forge .loading-text {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gf-muted);
+  animation: pulse-text 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse-text {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ── Library Item ── */
+.library-item {
+  background: var(--gf-bg3);
+  border: 1px solid var(--gf-border);
+  padding: 1rem 1.25rem;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.library-item:hover {
+  border-color: var(--gf-border-light);
+  box-shadow: var(--gf-card-hover-shadow);
+}
+
+.library-item img {
+  width: 80px;
+  height: 56px;
+  object-fit: cover;
+  opacity: 0.8;
+  flex-shrink: 0;
+}
+
+/* ── Profile header ── */
+.profile-avatar {
+  width: 72px;
+  height: 72px;
+  background: var(--gf-accent-d);
+  border: 2px solid var(--gf-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cinzel', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+/* ── Auth page ── */
+.auth-card {
+  background: var(--gf-bg2);
+  border: 1px solid var(--gf-border);
+  max-width: 440px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 0.75rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--gf-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.auth-tab.active {
+  color: var(--gf-text);
+  border-bottom-color: var(--gf-accent);
+}
+
+/* ── Filter bar (Home) ── */
+.filter-pill {
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.85rem;
+  background: transparent;
+  border: 1px solid var(--gf-border);
+  color: var(--gf-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 0;
+  white-space: nowrap;
+}
+
+.filter-pill:hover {
+  border-color: var(--gf-accent);
+  color: var(--gf-text);
+}
+
+.filter-pill.active {
+  background: var(--gf-accent);
+  border-color: var(--gf-accent);
+  color: #fff;
+}
+
+/* ── Inspiration block (CreateNovel) ── */
+.inspiration-toggle {
+  width: 100%;
+  background: transparent;
+  border: 1px solid var(--gf-gold);
+  color: var(--gf-gold);
+  padding: 0.85rem 1.1rem;
+  text-align: left;
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.inspiration-toggle:hover {
+  background: var(--gf-bg3);
+}
+
+.inspiration-list {
+  border: 1px solid var(--gf-border);
+  border-top: none;
+  background: var(--gf-bg2);
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.inspiration-item {
+  padding: 0.85rem 1.1rem;
+  border-bottom: 1px solid var(--gf-border);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.inspiration-item:last-child { border-bottom: none; }
+
+.inspiration-item:hover { background: var(--gf-bg3); }
+
+/* ── Responsive Utilities ── */
+@media (max-width: 575px) {
+  .hero-title { font-size: 1.9rem; }
+  .reading-area { padding: 2rem 1rem 7rem; }
+  .reader-topbar { padding: 0.5rem 0.8rem; }
+  .reader-bottombar { padding: 0.5rem 0.8rem; }
+  .reader-settings-panel .offcanvas { width: 100vw; }
+  .novel-hero { height: 180px; }
+}
+
+/* ── Animations ── */
+.fade-in {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.slide-up {
+  animation: slideUp 0.35s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Chapter preview fade ── */
+.chapter-preview {
+  position: relative;
+}
+
+.chapter-preview::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to bottom, transparent, var(--gf-bg3));
+  pointer-events: none;
+}
