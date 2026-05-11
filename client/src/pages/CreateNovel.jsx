@@ -4,7 +4,10 @@ import api from '../api/axios';
 import LoadingForge from '../components/LoadingForge';
 
 const DEFAULT_GENRES = ['Fantasy', 'Horror', 'Mystery', 'Thriller', 'Romance', 'Sci-Fi', 'Historical', 'Dark', 'Action', 'Adventure', 'Comedy', 'Drama', 'Supernatural', 'Crime', 'Dystopian', 'Psychological'];
-const TONES = ['Dark & Gritty', 'Gothic', 'Atmospheric', 'Epic', 'Suspenseful', 'Melancholic', 'Lyrical', 'Visceral'];
+const TONES = [
+  'Dark & Gritty', 'Gothic', 'Atmospheric', 'Epic', 'Suspenseful', 'Melancholic', 'Lyrical', 'Visceral',
+  'Humorous', 'Light-hearted', 'Action-packed', 'Adventurous', 'Witty', 'Romantic', 'Dramatic', 'Tense',
+];
 const LENGTHS = [
   { label: 'Short', sub: '~800 words', value: 800 },
   { label: 'Standard', sub: '~1500 words', value: 1500 },
