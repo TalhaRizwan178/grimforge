@@ -88,7 +88,7 @@ export default function CreateNovel() {
   const toggleGenre = (g) => {
     setForm(p => {
       if (p.genres.includes(g)) return { ...p, genres: p.genres.filter(x => x !== g) };
-      if (p.genres.length >= 3) return p; // max 3
+      if (p.genres.length >= 4) return p; // max 4
       return { ...p, genres: [...p.genres, g] };
     });
   };
@@ -96,7 +96,7 @@ export default function CreateNovel() {
   const addCustomGenre = () => {
     const val = customInput.trim();
     if (!val) return;
-    if (form.genres.length >= 3) return;
+    if (form.genres.length >= 4) return;
     const normalised = val.charAt(0).toUpperCase() + val.slice(1);
     if ([...DEFAULT_GENRES, ...customGenres].includes(normalised)) {
       if (!form.genres.includes(normalised)) toggleGenre(normalised);
@@ -229,11 +229,11 @@ export default function CreateNovel() {
                 <label className="gf-label mb-0">
                   Genre *
                   <span style={{ color: 'var(--gf-faint)', textTransform: 'none', fontFamily: 'Crimson Text, serif', letterSpacing: 0, fontSize: '0.82rem', marginLeft: '0.5rem' }}>
-                    — select up to 3
+                    — select up to 4
                   </span>
                 </label>
-                <span style={{ fontSize: '0.65rem', fontFamily: 'Cinzel, serif', letterSpacing: '0.1em', color: form.genres.length >= 3 ? 'var(--gf-accent)' : 'var(--gf-faint)' }}>
-                  {form.genres.length} / 3
+                <span style={{ fontSize: '0.65rem', fontFamily: 'Cinzel, serif', letterSpacing: '0.1em', color: form.genres.length >= 4 ? 'var(--gf-accent)' : 'var(--gf-faint)' }}>
+                  {form.genres.length} / 4
                 </span>
               </div>
 
