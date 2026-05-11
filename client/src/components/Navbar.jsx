@@ -45,38 +45,7 @@ export default function Navbar() {
             <i className={`bi ${THEME_ICONS[theme]}`}></i>
           </button>
 
-          {/* Avatar dropdown outside collapse so it stays top-right on mobile */}
-          {user && (
-            <div className="dropdown">
-              <div
-                className="gf-avatar dropdown-toggle"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                style={{ cursor: 'pointer' }}
-              >
-                {user.username[0].toUpperCase()}
-              </div>
-              <ul className="dropdown-menu dropdown-menu-end" style={{ right: 0, left: 'auto', minWidth: 180 }}>
-                <li>
-                  <span style={{ display: 'block', padding: '0.5rem 1rem', fontSize: '0.75rem', color: 'var(--gf-muted)', fontFamily: 'Cinzel, serif' }}>
-                    {user.username}
-                  </span>
-                </li>
-                <li><hr className="dropdown-divider" /></li>
-                <li><Link to="/create" className="dropdown-item"><i className="bi bi-hammer me-2"></i>Forge Novel</Link></li>
-                <li><Link to="/profile" className="dropdown-item"><i className="bi bi-person me-2"></i>Profile</Link></li>
-                <li><Link to="/library" className="dropdown-item"><i className="bi bi-collection me-2"></i>Library</Link></li>
-                <li><hr className="dropdown-divider" /></li>
-                <li>
-                  <button onClick={handleLogout} className="dropdown-item" style={{ color: 'var(--gf-accent)', cursor: 'pointer', background: 'none', border: 'none', width: '100%', textAlign: 'left', padding: '0.6rem 1.1rem', fontFamily: 'Cinzel, serif', fontSize: '0.68rem', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
-                    <i className="bi bi-box-arrow-right me-2"></i>Logout
-                  </button>
-                </li>
-              </ul>
-            </div>
-          )}
-
-          <button
+<button
             className="navbar-toggler border-0 p-1"
             type="button"
             data-bs-toggle="collapse"
@@ -107,7 +76,7 @@ export default function Navbar() {
           </ul>
 
           {/* Right controls */}
-          <div className="d-flex align-items-center gap-2">
+          <div className="d-flex align-items-center gap-2 ms-auto ms-md-0">
             {/* Theme cycle button (desktop) */}
             <button
               className="btn-gf-icon d-none d-md-flex"
@@ -125,8 +94,8 @@ export default function Navbar() {
                   Forge Novel
                 </Link>
 
-                {/* User dropdown — desktop only, mobile version is outside collapse */}
-                <div className="dropdown d-none d-md-flex">
+                {/* User dropdown */}
+                <div className="dropdown">
                   <div
                     className="gf-avatar dropdown-toggle"
                     data-bs-toggle="dropdown"
