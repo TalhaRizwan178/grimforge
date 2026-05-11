@@ -23,11 +23,11 @@ const GENRE_ICONS = {
   Action: 'bi-shield-fill',
   Adventure: 'bi-compass',
   Comedy: 'bi-emoji-laughing',
-  Drama: 'bi-masks',
+  Drama: 'bi-camera-reels',
   Supernatural: 'bi-eye',
-  Crime: 'bi-fingerprint',
-  Dystopian: 'bi-building-x',
-  Psychological: 'bi-brain',
+  Crime: 'bi-incognito',
+  Dystopian: 'bi-building-slash',
+  Psychological: 'bi-person-bounding-box',
 };
 
 export default function CreateNovel() {
