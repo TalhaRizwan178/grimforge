@@ -45,7 +45,7 @@ router.get('/', optionalAuth, async (req, res) => {
     const { genre, search, page = 1, limit = 12 } = req.query;
     const where = {};
 
-    if (genre) where.genre = genre;
+    if (genre) where.genre = { [Op.like]: `%${genre}%` };
     if (search) where.title = { [Op.like]: `%${search}%` };
 
     const novels = await Novel.findAll({
