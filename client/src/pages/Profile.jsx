@@ -22,6 +22,7 @@ const FONTS = [
   { id: 'source-serif',  label: 'Source Serif',  style: "'Source Serif 4', serif" },
   { id: 'georgia',       label: 'Georgia',        style: 'Georgia, serif' },
   { id: 'lato',          label: 'Lato',           style: "'Lato', sans-serif" },
+  { id: 'dancing',       label: 'Dancing Script', style: "'Dancing Script', cursive" },
 ];
 
 const LINE_HEIGHTS = [
