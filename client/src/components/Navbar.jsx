@@ -59,8 +59,8 @@ export default function Navbar() {
         </div>
 
         <div className="collapse navbar-collapse" id="gfNavbar">
-          {/* Left nav */}
-          <ul className="navbar-nav me-auto gap-1">
+          {/* Left nav — right aligned on mobile */}
+          <ul className="navbar-nav me-auto gap-1 text-end text-md-start">
             <li className="nav-item">
               <Link to="/" className={`nav-link ${isActive('/') ? 'active' : ''}`}>
                 Browse
@@ -76,7 +76,7 @@ export default function Navbar() {
           </ul>
 
           {/* Right controls */}
-          <div className="d-flex align-items-center gap-2 ms-auto ms-md-0">
+          <div className="d-flex align-items-center justify-content-end gap-2">
             {/* Theme cycle button (desktop) */}
             <button
               className="btn-gf-icon d-none d-md-flex"
@@ -136,7 +136,7 @@ export default function Navbar() {
                 </div>
               </>
             ) : (
-              <Link to="/auth" className="btn-gf-primary" style={{ padding: '0.5rem 1.1rem' }}>
+              <Link to="/auth" className="btn-gf-primary ms-auto ms-md-0" style={{ padding: '0.5rem 1.1rem' }}>
                 Enter the Forge
               </Link>
             )}
