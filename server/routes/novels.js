@@ -147,6 +147,7 @@ router.post('/', authenticate, async (req, res) => {
 
     res.status(201).json({ novel: novel.toJSON(), chapter1: chapter1.toJSON() });
   } catch (err) {
+    console.error('[POST /api/novels] Error:', err.message);
     res.status(500).json({ error: err.message });
   }
 });
