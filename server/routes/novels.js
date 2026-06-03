@@ -111,6 +111,7 @@ router.post('/', authenticate, async (req, res) => {
     let thumbnail_url = null;
     try {
       thumbnail_url = await generateThumbnail(genre, title, plot, tone);
+      console.log('[thumbnail] generated:', thumbnail_url);
     } catch (thumbErr) {
       console.error('[thumbnail] generation failed:', thumbErr.message);
     }
