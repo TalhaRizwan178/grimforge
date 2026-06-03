@@ -3,6 +3,11 @@ import { Link } from 'react-router-dom';
 import api from '../api/axios';
 import LoadingForge from '../components/LoadingForge';
 
+function cleanThumbnailUrl(url) {
+  if (!url) return null;
+  try { const u = new URL(url); u.searchParams.delete('nologo'); u.searchParams.delete('enhance'); return u.toString(); } catch { return url; }
+}
+
 export default function Library() {
   const [library, setLibrary] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -63,7 +68,7 @@ export default function Library() {
               return (
                 <div key={novel.id} className="library-item">
                   <img
-                    src={novel.thumbnail_url || `https://picsum.photos/seed/${novel.id}/160/112`}
+                    src={cleanThumbnailUrl(novel.thumbnail_url) || `https://picsum.photos/seed/${novel.id}/160/112`}
                     alt={novel.title}
                   />
                   <div style={{ flex: 1, minWidth: 0 }}>

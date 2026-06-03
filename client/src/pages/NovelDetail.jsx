@@ -4,6 +4,11 @@ import api from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 import LoadingForge from '../components/LoadingForge';
 
+function cleanThumbnailUrl(url) {
+  if (!url) return null;
+  try { const u = new URL(url); u.searchParams.delete('nologo'); u.searchParams.delete('enhance'); return u.toString(); } catch { return url; }
+}
+
 export default function NovelDetail() {
   const { id } = useParams();
   const { user } = useAuth();
@@ -52,7 +57,7 @@ export default function NovelDetail() {
       {/* Hero Image */}
       <div className="novel-hero">
         <img
-          src={novel.thumbnail_url || `https://picsum.photos/seed/${novel.id}/1200/450`}
+          src={cleanThumbnailUrl(novel.thumbnail_url) || `https://picsum.photos/seed/${novel.id}/1200/450`}
           alt={novel.title}
           onError={e => { e.currentTarget.onerror = null; e.currentTarget.src = `https://picsum.photos/seed/${novel.id}/1200/450`; }}
         />

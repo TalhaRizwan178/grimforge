@@ -15,6 +15,18 @@ function wordCount(text = '') {
   return text.trim().split(/\s+/).length;
 }
 
+function cleanThumbnailUrl(url) {
+  if (!url) return null;
+  try {
+    const u = new URL(url);
+    u.searchParams.delete('nologo');
+    u.searchParams.delete('enhance');
+    return u.toString();
+  } catch {
+    return url;
+  }
+}
+
 export default function NovelCard({ novel }) {
   const gc = GENRE_COLORS[novel.genre] || { color: 'var(--gf-muted)', bg: 'var(--gf-bg4)' };
 
@@ -26,7 +38,7 @@ export default function NovelCard({ novel }) {
     >
       <div style={{ overflow: 'hidden', position: 'relative', aspectRatio: '16/9' }}>
         <img
-          src={novel.thumbnail_url || `https://picsum.photos/seed/${novel.id}/800/450`}
+          src={cleanThumbnailUrl(novel.thumbnail_url) || `https://picsum.photos/seed/${novel.id}/800/450`}
           alt={novel.title}
           className="card-img-top"
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
