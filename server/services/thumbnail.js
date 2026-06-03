@@ -17,6 +17,11 @@ function titleSeed(title, genre) {
   ) % 99999;
 }
 
+function pollinationsUrl(prompt, seed) {
+  const encoded = encodeURIComponent(prompt);
+  return `https://image.pollinations.ai/prompt/${encoded}?width=800&height=450&seed=${seed}&model=flux`;
+}
+
 function uploadToCloudinary(buffer, publicId) {
   return new Promise((resolve, reject) => {
     cloudinary.uploader.upload_stream(
@@ -60,17 +65,7 @@ function hfRequest(prompt, seed) {
   });
 }
 
-async function generateThumbnail(genre, title, plot, tone = '') {
-  const seed = titleSeed(title, genre);
-
-  let prompt;
-  try {
-    prompt = await generateThumbnailPrompt(title, plot, genre, tone);
-  } catch {
-    prompt = `${title}, ${genre} novel cover, cinematic digital painting, dramatic, no text`;
-  }
-
-  // Retry up to 3x if model is loading (503)
+async function generateThumbnailViaHF(prompt, seed) {
   let result;
   for (let attempt = 0; attempt < 3; attempt++) {
     result = await hfRequest(prompt, seed);
@@ -85,8 +80,26 @@ async function generateThumbnail(genre, title, plot, tone = '') {
     throw new Error(`HuggingFace API error ${result.status}: ${result.buffer.toString().slice(0, 200)}`);
   }
 
-  const url = await uploadToCloudinary(result.buffer, `novel_${seed}`);
-  return url;
+  return uploadToCloudinary(result.buffer, `novel_${seed}`);
+}
+
+async function generateThumbnail(genre, title, plot, tone = '') {
+  const seed = titleSeed(title, genre);
+
+  let prompt;
+  try {
+    prompt = await generateThumbnailPrompt(title, plot, genre, tone);
+  } catch {
+    prompt = `${title}, ${genre} novel cover, cinematic digital painting, dramatic, no text`;
+  }
+
+  // Try HuggingFace + Cloudinary first, fall back to Pollinations
+  try {
+    return await generateThumbnailViaHF(prompt, seed);
+  } catch (err) {
+    console.error('[thumbnail] HF failed, falling back to Pollinations:', err.message);
+    return pollinationsUrl(prompt, seed);
+  }
 }
 
 module.exports = { generateThumbnail };

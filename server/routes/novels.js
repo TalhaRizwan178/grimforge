@@ -107,8 +107,13 @@ router.post('/', authenticate, async (req, res) => {
       title = await generateTitle(plot, genre, tone);
     }
 
-    // Thumbnail: Groq generates a plot-specific prompt → Pollinations renders it
-    const thumbnail_url = await generateThumbnail(genre, title, plot, tone);
+    // Thumbnail: non-blocking — novel creation succeeds even if thumbnail fails
+    let thumbnail_url = null;
+    try {
+      thumbnail_url = await generateThumbnail(genre, title, plot, tone);
+    } catch (thumbErr) {
+      console.error('[thumbnail] generation failed:', thumbErr.message);
+    }
 
     const novel = await Novel.create({
       title: title.trim(),
