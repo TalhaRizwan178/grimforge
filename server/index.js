@@ -47,7 +47,7 @@ async function start() {
 
   // Step 2: Sync all Sequelize models (creates/alters tables)
   try {
-    await sequelize.sync({ alter: true });
+    await sequelize.sync({ alter: false });
     console.log('Tables synced successfully');
   } catch (err) {
     console.error('Table sync failed:', err.message);
