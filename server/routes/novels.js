@@ -7,6 +7,14 @@ const { generateThumbnail } = require('../services/thumbnail');
 
 const router = express.Router();
 
+// Background refresh: replace broken Pollinations URLs with Pexels (fire and forget)
+function refreshIfPollinations(novel) {
+  if (!novel || !novel.thumbnail_url || !novel.thumbnail_url.includes('pollinations.ai')) return;
+  generateThumbnail(novel.genre, novel.title, novel.plot, novel.tone)
+    .then(url => Novel.update({ thumbnail_url: url }, { where: { id: novel.id } }))
+    .catch(() => {});
+}
+
 // GET /api/novels/user/library — must be before /:id
 router.get('/user/library', authenticate, async (req, res) => {
   try {
@@ -33,7 +41,9 @@ router.get('/user/library', authenticate, async (req, res) => {
       }
     });
 
-    res.json(Object.values(novelMap));
+    const result = Object.values(novelMap);
+    result.forEach(({ novel }) => refreshIfPollinations(novel.toJSON ? novel.toJSON() : novel));
+    res.json(result);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -61,6 +71,7 @@ router.get('/', optionalAuth, async (req, res) => {
       return { ...novel.toJSON(), reader_count };
     }));
 
+    novelsWithStats.forEach(novel => refreshIfPollinations(novel));
     res.json(novelsWithStats);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -88,7 +99,9 @@ router.get('/:id', optionalAuth, async (req, res) => {
       });
     }
 
-    res.json({ ...novel.toJSON(), chapter1, reader_count });
+    const novelData = novel.toJSON();
+    refreshIfPollinations(novelData);
+    res.json({ ...novelData, chapter1, reader_count });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

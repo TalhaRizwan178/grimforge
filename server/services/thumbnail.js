@@ -1,4 +1,19 @@
-const { generateThumbnailPrompt } = require('./groq');
+const https = require('https');
+
+const PEXELS_KEY = process.env.PEXELS_API_KEY;
+
+const GENRE_QUERIES = {
+  'Fantasy':    'epic fantasy magical castle forest',
+  'Horror':     'horror dark ominous haunted night',
+  'Romance':    'romantic dramatic cinematic couple',
+  'Thriller':   'thriller suspense dark city night',
+  'Mystery':    'mystery foggy dark noir detective',
+  'Sci-Fi':     'science fiction futuristic space city',
+  'Historical': 'historical period dramatic epic ancient',
+  'Dark':       'dark gothic atmospheric moody',
+  'Crime':      'crime noir dark urban gritty',
+  'Adventure':  'adventure epic dramatic landscape',
+};
 
 function titleSeed(title, genre) {
   return Math.abs(
@@ -6,22 +21,44 @@ function titleSeed(title, genre) {
   ) % 99999;
 }
 
-function pollinationsUrl(prompt, seed) {
-  const encoded = encodeURIComponent(prompt.trim().replace(/\.$/, ''));
-  return `https://image.pollinations.ai/prompt/${encoded}?width=800&height=450&seed=${seed}&model=turbo`;
+function pexelsSearch(query) {
+  return new Promise((resolve, reject) => {
+    const options = {
+      hostname: 'api.pexels.com',
+      path: `/v1/search?query=${encodeURIComponent(query)}&per_page=15&orientation=landscape`,
+      method: 'GET',
+      headers: { 'Authorization': PEXELS_KEY },
+    };
+    const req = https.request(options, (res) => {
+      let data = '';
+      res.on('data', chunk => data += chunk);
+      res.on('end', () => {
+        try { resolve({ status: res.statusCode, data: JSON.parse(data) }); }
+        catch (e) { reject(e); }
+      });
+    });
+    req.setTimeout(15000, () => { req.destroy(); reject(new Error('Pexels timeout')); });
+    req.on('error', reject);
+    req.end();
+  });
 }
 
 async function generateThumbnail(genre, title, plot, tone = '') {
   const seed = titleSeed(title, genre);
+  const query = GENRE_QUERIES[genre] || `${genre} dramatic atmospheric cinematic`;
 
-  let prompt;
   try {
-    prompt = await generateThumbnailPrompt(title, plot, genre, tone);
-  } catch {
-    prompt = `${title}, ${genre} novel cover, cinematic digital painting, dramatic, no text`;
+    const result = await pexelsSearch(query);
+    if (result.status === 200 && result.data.photos?.length) {
+      const photos = result.data.photos;
+      const photo = photos[seed % photos.length];
+      return photo.src.landscape || photo.src.large2x || photo.src.large;
+    }
+    throw new Error('No photos found');
+  } catch (err) {
+    console.error('[thumbnail] Pexels failed:', err.message);
+    return `https://picsum.photos/seed/${seed}/800/450`;
   }
-
-  return pollinationsUrl(prompt, seed);
 }
 
 module.exports = { generateThumbnail };
