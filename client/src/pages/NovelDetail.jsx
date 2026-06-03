@@ -6,7 +6,7 @@ import LoadingForge from '../components/LoadingForge';
 
 function cleanThumbnailUrl(url) {
   if (!url) return null;
-  try { const u = new URL(url); u.searchParams.delete('nologo'); u.searchParams.delete('enhance'); return u.toString(); } catch { return url; }
+  try { const u = new URL(url); u.searchParams.delete('nologo'); u.searchParams.delete('enhance'); if (u.searchParams.get('model') === 'flux') u.searchParams.set('model', 'turbo'); return u.toString(); } catch { return url; }
 }
 
 export default function NovelDetail() {

@@ -84,7 +84,7 @@ export default function NovelDetailScreen({ route, navigation }) {
   const fallbackUri = `https://picsum.photos/seed/${novel.id}/800/450`;
   const cleanUrl = (url) => {
     if (!url) return null;
-    try { const u = new URL(url); u.searchParams.delete('nologo'); u.searchParams.delete('enhance'); return u.toString(); } catch { return url; }
+    try { const u = new URL(url); u.searchParams.delete('nologo'); u.searchParams.delete('enhance'); if (u.searchParams.get('model') === 'flux') u.searchParams.set('model', 'turbo'); return u.toString(); } catch { return url; }
   };
   const imageUri = cleanUrl(novel.thumbnail_url) || fallbackUri;
 

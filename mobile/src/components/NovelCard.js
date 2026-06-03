@@ -25,6 +25,7 @@ export default function NovelCard({ novel }) {
       const u = new URL(url);
       u.searchParams.delete('nologo');
       u.searchParams.delete('enhance');
+      if (u.searchParams.get('model') === 'flux') u.searchParams.set('model', 'turbo');
       return u.toString();
     } catch {
       return url;
